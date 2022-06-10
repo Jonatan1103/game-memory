@@ -7,11 +7,11 @@ const App = () => {
     <C.Container>
       <C.Info>
         <C.LogoLink href="">
-          <img src={logo} alt="" />
+          <img src={logo} alt="imagem do logo" width={200}/>
         </C.LogoLink>
 
         <C.InfoArea>
-
+          ....
         </C.InfoArea>
 
         <button>Reiniciar</button>
@@ -19,7 +19,7 @@ const App = () => {
       </C.Info>
 
       <C.GridArea>
-
+        ....
       </C.GridArea>
     </C.Container>
   )
