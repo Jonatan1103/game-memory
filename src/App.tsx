@@ -8,8 +8,8 @@ import restartIcon from "./svgs/restart.svg"
 import Button from "./components/Button"
 import InfoItem from "./components/InfoItem"
 
-import { GridItemType } from "./types/GridItemType"
-import { items } from "./data/items"
+import GridItemType from "./types/GridItemType"
+import items from "./data/items"
 import GridItem from "./components/GridItem"
 import formtTimeElapsed from "./helpers/formatTimeElapsed"
 
@@ -31,6 +31,47 @@ const App = () => {
 
     return () => clearInterval(timer)
   }, [playing, timeElapsed])
+
+  useEffect(() => {
+    if(showCount === 2) {
+      const opened = gridItems.filter((item) => item.shown === true)
+      
+      if(opened.length === 2) {
+
+        if(opened[0].item === opened[1].item) {
+          let tmpGrid = [...gridItems]
+          for (let i in tmpGrid) {
+
+            if(tmpGrid[i].shown) {
+              tmpGrid[i].permanentShown = true
+              tmpGrid[i].shown = false
+            }
+          }
+          setGridItems(tmpGrid)
+          setShowCount(0)
+
+        } else {
+          setTimeout(() => {
+            let tmpGrid = [...gridItems]
+            for(let i in tmpGrid) {
+              tmpGrid[i].shown = false
+            }
+            setGridItems(tmpGrid)
+            setShowCount(0)
+          }, 600)
+        }
+      }
+
+
+      setMoveCount(moveCount => moveCount + 1)
+    }
+  },[showCount, gridItems])
+
+  useEffect(() => {
+    if(moveCount > 0 && gridItems.every(item => item.permanentShown === true)) {
+      setPlaying(false)
+    }
+  }, [moveCount, gridItems])
 
   const resetAndCreateGrid = () => {
     // RESETANDO O JOGO
@@ -67,7 +108,16 @@ const App = () => {
   }
 
   const handleItemClick = (index: number) => {
-    
+    if(playing && index !== null && showCount < 2) {
+      let tmpGrid = [...gridItems]
+
+      if(tmpGrid[index].permanentShown === false && 
+          tmpGrid[index].shown === false) {
+            tmpGrid[index].shown = true
+            setShowCount(showCount + 1)
+      }
+      setGridItems(tmpGrid)
+    }
   }
 
   return(
@@ -80,7 +130,7 @@ const App = () => {
 
         <C.InfoArea>
           <InfoItem label="Tempo" value={formtTimeElapsed(timeElapsed)}/>
-          <InfoItem label="Movimentos" value="0"/>
+          <InfoItem label="Movimentos" value={moveCount.toString()}/>
         </C.InfoArea>
 
         <Button icon={restartIcon} label="Reiniciar" onClick={resetAndCreateGrid}/>

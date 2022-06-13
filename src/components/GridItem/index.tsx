@@ -1,8 +1,8 @@
 import * as C from "./styles"
 
-import { GridItemType } from "../../types/GridItemType"
+import GridItemType from "../../types/GridItemType"
 import b7webIcon from "../../svgs/b7.svg"
-import { items } from "../../data/items"
+import items from "../../data/items"
 
 type Props = {
   item: GridItemType

@@ -6,7 +6,7 @@ import gasolinaSvg from "../svgs/gasolina.svg"
 import motoSvg from "../svgs/moto.svg"
 
  
-export const items = [
+const items = [
   {
     name: 'android',
     icon: androidSvg
@@ -32,3 +32,5 @@ export const items = [
     icon: motoSvg
   },
 ]
+
+export default items
