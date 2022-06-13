@@ -42,7 +42,6 @@ export const GridArea = styled.section`
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  background-color: aliceblue;
 
   @media (max-width:750px) {
     justify-content: center;
